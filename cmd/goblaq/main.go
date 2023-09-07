@@ -9,6 +9,6 @@ var rootCmd = cobra.Command{
 }
 
 func main() {
-	rootCmd.AddCommand(&webCmd)
+	rootCmd.AddCommand(&watchCmd)
 	rootCmd.Execute()
 }
