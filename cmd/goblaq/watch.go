@@ -39,13 +39,13 @@ func runWatch(cmd *cobra.Command, args []string) error {
 	name := args[0]
 	target := args[1]
 	schema, _ := cmd.Flags().GetString("schema")
-	targetService, _ := cmd.Flags().GetStringSlice("target-service")
-	return watch.AppendWatch(name, target, schema, targetService)
+	path, _ := cmd.Flags().GetString("path")
+	return watch.AppendWatch(name, target, schema, path)
 }
 
 func prepareWatchCmd() {
-	watchCmd.PersistentFlags().String("schema", "", "Set target schema e.g.: --schema https. Default schema: http")
-	watchCmd.PersistentFlags().StringSlice("target-service", []string{}, "List of target hosted services, e.g.: --target-service \"/app1, /app2\"")
+	watchCmd.PersistentFlags().String("schema", "http", "Set target schema e.g.: --schema https. Default schema: http")
+	watchCmd.PersistentFlags().String("path", "/", "Target status path, e.g.: --path \"/app1/status\"")
 }
 
 func init() {
