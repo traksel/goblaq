@@ -45,7 +45,7 @@ func runWatch(cmd *cobra.Command, args []string) error {
 
 func prepareWatchCmd() {
 	watchCmd.PersistentFlags().String("schema", "http", "Set target schema e.g.: --schema https. Default schema: http")
-	watchCmd.PersistentFlags().String("path", "/", "Target status path, e.g.: --path \"/app1/status\"")
+	watchCmd.PersistentFlags().String("path", "/", "Target status path, e.g.: --path \"/app/status\"")
 }
 
 func init() {
