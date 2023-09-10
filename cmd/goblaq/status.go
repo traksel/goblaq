@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/traksel/goblaq/internal/require"
 	"github.com/traksel/goblaq/internal/status"
-	"github.com/traksel/goblaq/pkg/require"
 )
 
 var statusCmd = &cobra.Command{
