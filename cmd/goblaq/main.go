@@ -14,8 +14,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(watchCmd)
 	rootCmd.AddCommand(statusCmd)
+
 }
 
-func main() {
-	rootCmd.Execute()
-}
+func main() { rootCmd.Execute() }
