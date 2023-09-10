@@ -1,38 +1,17 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"github.com/traksel/goblaq/internal/watch"
+	"github.com/traksel/goblaq/pkg/require"
 )
 
 var watchCmd = &cobra.Command{
-	Use:               "watch [NAME] [TARGET]",
-	Args:              exactArgs(2),
-	Short:             "",
-	Long:              ``,
-	RunE:              runWatch,
-	ValidArgsFunction: noCompletions,
-}
-
-func noCompletions(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-	return nil, cobra.ShellCompDirectiveNoFileComp
-}
-
-func exactArgs(n int) cobra.PositionalArgs {
-	return func(cmd *cobra.Command, args []string) error {
-		if len(args) != n {
-			return fmt.Errorf(
-				"%q requires %d %s\n\nUsage:  %s",
-				cmd.CommandPath(),
-				n,
-				"argument(s)",
-				cmd.UseLine(),
-			)
-		}
-		return nil
-	}
+	Use:   "watch [NAME] [TARGET]",
+	Args:  require.ExactArgs(2),
+	Short: "",
+	Long:  ``,
+	RunE:  runWatch,
 }
 
 func runWatch(cmd *cobra.Command, args []string) error {

@@ -7,7 +7,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type data struct {
+type Data struct {
 	Name   string `yaml:"name"`
 	Target string `yaml:"target"`
 	Schema string `yaml:"schema"`
@@ -16,16 +16,16 @@ type data struct {
 
 var home = os.Getenv("HOME")
 
-func (d *data) getActualData(name string, target string, schema string, path string) error {
+func (d *Data) Get(name string) (*Data, error) {
 	if _, err := os.Stat(fmt.Sprintf("%s/.goblaq/%s/", home, name)); os.IsNotExist(err) {
 		os.MkdirAll(fmt.Sprintf("%s/.goblaq/%s", home, name), os.ModePerm)
 	}
-	file, err := os.ReadFile(fmt.Sprintf("%s/.goblaq/%s/data.yaml", home, name))
+	file, err := os.ReadFile(fmt.Sprintf("%s/.goblaq/%s/Data.yaml", home, name))
 	yaml.Unmarshal(file, d)
-	return err
+	return d, err
 }
 
-func (d *data) fillData(name string, target string, schema string, path string) *data {
+func (d *Data) Fill(name string, target string, schema string, path string) *Data {
 	d.Name = name
 	d.Target = target
 	d.Schema = schema
@@ -34,19 +34,21 @@ func (d *data) fillData(name string, target string, schema string, path string) 
 }
 
 func AppendWatch(name string, target string, schema string, path string) error {
-	var d data
-	err := d.getActualData(name, target, schema, path)
+	var d Data
+	_, err := d.Get(name)
 	if err != nil {
-		file := d.fillData(name, target, schema, path)
+		file := d.Fill(name, target, schema, path)
 		writeData, _ := yaml.Marshal(file)
-		os.WriteFile(fmt.Sprintf("%s/.goblaq/%s/data.yaml", home, name), writeData, os.ModePerm)
+		err := os.WriteFile(fmt.Sprintf("%s/.goblaq/%s/Data.yaml", home, name), writeData, os.ModePerm)
+		if err == nil {
+			fmt.Printf(
+				"SERVICE ADDED:\nName: %s\nTarget: %s\nSchema: %s\nTargets: %v",
+				name,
+				target,
+				schema,
+				path,
+			)
+		}
 	}
-	fmt.Printf(
-		"SERVICE ADDED:\nName: %s\nTarget: %s\nSchema: %s\nTargets: %v",
-		name,
-		target,
-		schema,
-		path,
-	)
 	return nil
 }
