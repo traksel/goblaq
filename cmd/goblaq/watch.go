@@ -19,7 +19,7 @@ func runWatch(cmd *cobra.Command, args []string) error {
 	target := args[1]
 	schema, _ := cmd.Flags().GetString("schema")
 	path, _ := cmd.Flags().GetString("path")
-	return watch.AppendWatch(name, target, schema, path)
+	return watch.Add(name, target, schema, path)
 }
 
 func prepareWatchCmd() {

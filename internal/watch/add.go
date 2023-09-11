@@ -33,7 +33,7 @@ func (d *Data) Fill(name string, target string, schema string, path string) *Dat
 	return d
 }
 
-func AppendWatch(name string, target string, schema string, path string) error {
+func Add(name string, target string, schema string, path string) error {
 	var d Data
 	_, err := d.Get(name)
 	if err != nil {
