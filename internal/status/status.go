@@ -61,7 +61,7 @@ func (s *Status) Get(name string) {
 		"TIMESTAMP",
 	)
 	for _, n := range names {
-		file, _ := os.ReadFile(fmt.Sprintf("%s/.goblaq/%s/Data.yaml", home, n))
+		file, _ := os.ReadFile(fmt.Sprintf("%s/.goblaq/%s/data.yaml", home, n))
 		yaml.Unmarshal(file, s)
 		fmt.Fprintf(w,
 			"%s\t\t%d\t\t%s\n",
