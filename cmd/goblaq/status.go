@@ -11,11 +11,11 @@ var statusCmd = &cobra.Command{
 	Args:  require.ExactArgs(1),
 	Short: "",
 	Long:  ``,
-	RunE:  runStatus,
+	Run:   runStatus,
 }
 
-func runStatus(cmd *cobra.Command, args []string) error {
+func runStatus(cmd *cobra.Command, args []string) {
 	s := status.Status{}
 	arg := args[0]
-	return s.Get(arg)
+	s.Get(arg)
 }
