@@ -15,6 +15,7 @@ func init() {
 	rootCmd.AddCommand(watchCmd)
 	rootCmd.AddCommand(statusCmd)
 	rootCmd.AddCommand(daemonCmd)
+	rootCmd.AddCommand(removeCmd)
 }
 
 func main() {
