@@ -33,6 +33,7 @@ $(BINDIR)/$(BINNAME): $(SRC)
 
 .PHONY: install
 install: build
+	@mkdir -p $(HOME)/bin
 	@mkdir -p $(HOME)/.goblaq
 	@install "$(BINDIR)/$(BINNAME)" "$(INSTALL_PATH)/$(BINNAME)"
 
