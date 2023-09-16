@@ -1,11 +1,11 @@
-INSTALL_PATH ?= /usr/local/bin
+INSTALL_PATH ?= $(HOME)/bin
 BINDIR 		 ?= $(CURDIR)/bin
 BINNAME 	 ?= goblaq
 SRC 		 := $(shell find . -type f -name '*.go' -print) go.mod go.sum
 CGO_ENABLED  ?= 0
 GOFLAGS 	 :=
 SHELL        = /usr/bin/env bash
-SERVICE_PATH ?= /lib/systemd/system/$(BINNAME).service
+SERVICE_PATH ?= $(HOME)/.config/systemd/user/$(BINNAME).service
 
 define SERVICE_BODY
 [Unit]
@@ -14,9 +14,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=$(shell id -u)
-Group=$(shell id -g)
-ExecStart=/usr/local/bin/$(BINNAME) daemon daemon
+ExecStart=$(INSTALL_PATH)/$(BINNAME) daemon daemon
 Restart=always
 
 [Install]
@@ -35,11 +33,13 @@ $(BINDIR)/$(BINNAME): $(SRC)
 
 .PHONY: install
 install: build
+	@mkdir -p $(HOME)/bin
 	@mkdir -p $(HOME)/.goblaq
 	@install "$(BINDIR)/$(BINNAME)" "$(INSTALL_PATH)/$(BINNAME)"
 
 .PHONY: daemon
 daemon:
+	@mkdir -p $(HOME)/.config/systemd/user
 	@echo "$$SERVICE_BODY" > "$(SERVICE_PATH)"
 
 
