@@ -14,8 +14,6 @@ After=network.target
 
 [Service]
 Type=simple
-User=$(shell id -u)
-Group=$(shell id -g)
 ExecStart=/usr/local/bin/$(BINNAME) daemon daemon
 Restart=always
 
