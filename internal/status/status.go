@@ -1,6 +1,8 @@
 package status
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"net/http"
 	"os"
@@ -31,12 +33,26 @@ func getNames(name string) []string {
 }
 
 func (s *Status) WriteStatus() {
-	var d watch.Data
+	d := watch.NewData()
 	names := getNames("all")
+	client := &http.Client{}
 	for _, n := range names {
 		data, err := d.Get(n)
 		if err == nil {
-			resp, _ := http.Get(fmt.Sprintf("%s://%s%s", data.Schema, data.Target, data.Path))
+			if data.Chain != "" {
+				cert, _ := os.ReadFile(data.Chain)
+				certsPool := x509.NewCertPool()
+				certsPool.AppendCertsFromPEM(cert)
+				client = &http.Client{
+					Transport: &http.Transport{
+						TLSClientConfig: &tls.Config{
+							InsecureSkipVerify: true,
+							RootCAs:            certsPool,
+						},
+					},
+				}
+			}
+			resp, _ := client.Get(fmt.Sprintf("%s://%s%s", data.Schema, data.Target, data.Path))
 			currentTime := time.Now().Format("Mon Jan _2 15:04:05 MST 2006")
 			s.Status = resp.StatusCode
 			s.Timestamp = currentTime
