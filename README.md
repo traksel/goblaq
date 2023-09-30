@@ -9,10 +9,10 @@ Requirements:
 
 To install Goblaq:
 1. Clone the repository to your machine and navigate to the directory.
-2. Run make install in the console.
-3. Add the services you want to monitor. Run goblaq watch help in the console and follow the instructions.
-4. Start the Goblaq daemon for real-time operation with goblaq daemon daemon, or run it in the background with make daemon.
-5. Wait for some time while Goblaq gathers statistics, then execute goblaq status all.
+2. Run `make install` in the console.
+3. Add the services you want to monitor. Run `goblaq watch help` in the console and follow the instructions.
+4. Start the Goblaq daemon for real-time operation with `goblaq daemon daemon`, or run it in the background with `make daemon`.
+5. Wait for some time while Goblaq gathers statistics, then execute `goblaq status all`.
 
 ## EXAMPLE
 |NAME |URL|STATUS|TIMESTAMP|MESSAGE|
